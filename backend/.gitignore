@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.env.*
+*.sqlite3
+instance/
+.webassets-cache
+
+# FastAPI
+*.log
+
+# PostgreSQL
+*.db
+*.sql
+
+# Redis
+*.rdb
+*.aof
+
+# VS Code
+.vscode/
