@@ -27,6 +27,27 @@ This is a monorepository for a task management system with:
 - Backend: `uvicorn main:app --reload`
 - Frontend: `npm start`
 
+## Database Migrations (Alembic)
+
+To create a new migration revision:
+
+```
+docker-compose run --rm backend alembic revision --autogenerate -m "your message"
+```
+
+To apply migrations and update the database:
+
+```
+make update-db
+```
+
+If you see errors about missing alembic.ini or script_location, ensure that `backend/alembic.ini` exists and contains:
+
+```
+[alembic]
+script_location = alembic
+```
+
 ---
 
 Replace placeholder code with your implementation as you build out features.

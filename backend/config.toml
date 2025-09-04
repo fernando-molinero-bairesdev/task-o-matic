@@ -1,0 +1,2 @@
+[database]
+url = "postgresql://taskomatic:taskomatic@db:5432/taskomatic"

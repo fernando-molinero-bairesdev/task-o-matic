@@ -29,3 +29,12 @@ install-docker-compose:
 	@echo "Adding current user to docker group for permissions..."
 	sudo usermod -aG docker $(USER)
 	@echo "You may need to log out and log back in, or run 'newgrp docker' for group changes to take effect."
+
+test:
+	docker-compose run --rm backend sh -c "PYTHONPATH=/app pip install pytest && PYTHONPATH=/app pytest tests $(path)"
+
+update-db:
+	docker-compose run --rm backend alembic upgrade head
+
+db-shell:
+	docker-compose exec db psql -U taskomatic -d taskomatic
