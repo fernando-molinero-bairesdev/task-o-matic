@@ -1,35 +1,98 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react';
 import './App.css'
+import Login from './components/Login';
+import Register from './components/Register';
+import Navigation from './components/Navigation';
+import authService from './services/authService';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [user, setUser] = useState(null);
+    const [showRegister, setShowRegister] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        // Check if user is already logged in
+        const checkAuth = async () => {
+            try {
+                if (authService.isAuthenticated()) {
+                    const userData = await authService.getCurrentUser();
+                    setUser(userData);
+                }
+            } catch (err) {
+                console.error('Auth check failed:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        checkAuth();
+    }, []);
+
+    const handleLoginSuccess = async () => {
+        try {
+            const userData = await authService.getCurrentUser();
+            setUser(userData);
+        } catch (err) {
+            console.error('Failed to get user data after login:', err);
+        }
+    };
+
+    const handleRegisterSuccess = () => {
+        setShowRegister(false);
+        // Optionally auto-login after registration
+    };
+
+    const handleLogout = () => {
+        setUser(null);
+    };
+
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+    }
+
+    return (
+        <div className="App">
+            <Navigation user={user} onLogout={handleLogout} />
+            
+            {user ? (
+                <div className="main-content">
+                    <h2>Dashboard</h2>
+                    <p>Welcome to your task management dashboard!</p>
+                    {/* Add your task components here */}
+                </div>
+            ) : (
+                <div className="auth-container">
+                    {showRegister ? (
+                        <div>
+                            <Register onRegisterSuccess={handleRegisterSuccess} />
+                            <p>
+                                Already have an account?{' '}
+                                <button 
+                                    className="link-button"
+                                    onClick={() => setShowRegister(false)}
+                                >
+                                    Login here
+                                </button>
+                            </p>
+                        </div>
+                    ) : (
+                        <div>
+                            <Login onLoginSuccess={handleLoginSuccess} />
+                            <p>
+                                Don't have an account?{' '}
+                                <button 
+                                    className="link-button"
+                                    onClick={() => setShowRegister(true)}
+                                >
+                                    Register here
+                                </button>
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default App

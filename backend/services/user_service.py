@@ -16,6 +16,9 @@ class UserService:
     def get_user(self, user_uuid):
         return self.db.query(User).filter(User.user_uuid == user_uuid, User.deleted_date == None).first()
 
+    def get_user_by_username(self, username):
+        return self.db.query(User).filter(User.username == username, User.deleted_date == None).first()
+
     def get_users(self, skip=0, limit=10):
         return self.db.query(User).filter(User.deleted_date == None).offset(skip).limit(limit).all()
 

@@ -1,2 +1,7 @@
 [database]
 url = "postgresql://taskomatic:taskomatic@db:5432/taskomatic"
+
+[auth]
+secret_key = "8f2a9b7c1e5d3f6a4c8b9e2d7f0a3c6b9e1d4f7a2c5b8e0d3f6a9c2b5e8d1f4a7c0b3e6d9f2a5c8b1e4d7f0a3c6b"
+algorithm = "HS256"
+access_token_expire_minutes = 30
