@@ -31,7 +31,19 @@ install-docker-compose:
 	@echo "You may need to log out and log back in, or run 'newgrp docker' for group changes to take effect."
 
 test:
-	docker-compose run --rm backend sh -c "PYTHONPATH=/app pip install pytest && PYTHONPATH=/app pytest tests $(path)"
+	docker-compose run --rm backend python -m pytest tests/ -v
+
+test-coverage:
+	docker-compose run --rm backend python -m pytest tests/ -v --cov=backend --cov-report=html --cov-report=term-missing
+
+test-integration:
+	docker-compose run --rm backend python -m pytest tests/test_task_integration.py -v
+
+test-endpoints:
+	docker-compose run --rm backend python -m pytest tests/test_task_endpoints.py -v
+
+test-watch:
+	docker-compose run --rm backend python -m pytest tests/ -v --tb=short -f
 
 update-db:
 	docker-compose run --rm backend alembic upgrade head

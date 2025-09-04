@@ -3,5 +3,14 @@ uvicorn
 sqlalchemy
 pydantic
 pydantic[email]
+pydantic-settings
 passlib[bcrypt]
 python-jose[cryptography]
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+python-multipart==0.0.5
+httpx==0.25.2
+toml==0.10.2
+redis==5.0.1
+redis[hiredis]==5.0.1

@@ -5,3 +5,29 @@ url = "postgresql://taskomatic:taskomatic@db:5432/taskomatic"
 secret_key = "8f2a9b7c1e5d3f6a4c8b9e2d7f0a3c6b9e1d4f7a2c5b8e0d3f6a9c2b5e8d1f4a7c0b3e6d9f2a5c8b1e4d7f0a3c6b"
 algorithm = "HS256"
 access_token_expire_minutes = 30
+refresh_token_expire_days = 7
+
+[cors]
+allowed_origins = ["http://localhost:3000", "http://127.0.0.1:3000"]
+allow_credentials = true
+allowed_methods = ["*"]
+allowed_headers = ["*"]
+
+[logging]
+level = "INFO"
+format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+file = "logs/app.log"
+max_bytes = 10485760
+backup_count = 5
+
+[cache]
+default_ttl = 300
+task_list_ttl = 60
+user_info_ttl = 900
+
+[api]
+title = "Task-O-Matic API"
+description = "A comprehensive task management system"
+version = "1.0.0"
+docs_url = "/docs"
+redoc_url = "/redoc"

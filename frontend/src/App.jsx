@@ -3,6 +3,7 @@ import './App.css'
 import Login from './components/Login';
 import Register from './components/Register';
 import Navigation from './components/Navigation';
+import TaskList from './components/TaskList';
 import authService from './services/authService';
 
 function App() {
@@ -58,7 +59,7 @@ function App() {
                 <div className="main-content">
                     <h2>Dashboard</h2>
                     <p>Welcome to your task management dashboard!</p>
-                    {/* Add your task components here */}
+                    <TaskList userId={user.id} />
                 </div>
             ) : (
                 <div className="auth-container">
